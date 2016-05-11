@@ -1,0 +1,38 @@
+!!! XML
+%rss(version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/")
+  %channel
+    %title
+      = "Contentful - Blog"
+
+    %link
+      = absolute_url("/blog/")
+
+    %language
+      = "en-US"
+
+    - blog.articles.each do |article|
+      %item
+        %title
+          :escaped
+            #{article.title}
+
+        %link
+          = absolute_url(article.url)
+
+        %guid
+          = article.id
+
+        %pubDate
+          = article.date.to_time.iso8601
+
+        %author
+          :escaped
+            #{article.authors.first[:name]}
+
+        %description
+          :escaped
+            #{article.teaser}
+
+        %content:encoded
+          :cdata
+            #{partial('fbia.html', :locals => {:article => article})}

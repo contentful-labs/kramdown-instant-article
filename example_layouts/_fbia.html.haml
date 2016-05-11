@@ -1,0 +1,43 @@
+- author = article.authors.first
+!!! 5
+%html(lang="en-us" prefix="op: http://media.facebook.com/op#")
+  %head
+    %meta(charset="utf-8")
+    %link(rel="canonical" href="#{absolute_url(article.url)}")
+
+    %meta(property="op:markup_version" content="v1.0")
+    %meta(property="fb:article_style" content="blog")
+
+  %body
+    %article
+      %header
+        - if article.respond_to?(:featureimage) and (not article.featureimage.nil?)
+          %figure
+            %img(src="https:#{article.featureimage[:url]}")
+            - if defined? article.featureImageCaption and (not article.featureImageCaption.nil?)
+              %figcaption
+                = article.featureImageCaption
+
+        %h1
+          = article.title
+
+        - article.authors.each do |author|
+          %address
+            %a
+              = author[:name]
+
+        %time.op-published(dateTime="#{article.date.to_time.iso8601}")
+          = blog_date(article.publishDate)
+
+        %time.op-modified(dateTime="#{article.updatedAt.to_time.iso8601}")
+
+      - if article.respond_to?(:introduction) and (not article.introduction.nil?)
+        = render_fbia_markdown(article.introduction)
+      = render_fbia_markdown(article.content)
+
+      %footer
+        %aside
+          %p
+            %strong
+              = author[:name]
+          = render_fbia_markdown(author[:biography])

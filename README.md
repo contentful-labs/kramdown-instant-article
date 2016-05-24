@@ -2,6 +2,9 @@
 
 Custom converter for [Kramdown][1] to create markup optimized for Facebook's Instant Articles.
 
+More information on the *why* and *how* can be found in the
+[blog post](https://www.contentful.com/blog/2016/05/13/facebook-instant-articles-and-contentful/) announcing this project.
+
 ## What's different about it?
 
 The following things are handled differently compared to Kramdown's HTML converter. Not that some of these changes are
